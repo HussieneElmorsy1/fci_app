@@ -1,5 +1,9 @@
+import 'package:fci_app/locale/locale.dart';
+import 'package:fci_app/screens/forgot_password_screen.dart';
 import 'package:fci_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/splash_screen.dart';
 import 'screens/onboarding_screen.dart';
@@ -14,15 +18,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      locale: Get.deviceLocale,
+      translations: MyLocale(),
       debugShowCheckedModeBanner: false,
       title: 'FCI App',
       routes: {
         HomeScreen.id: (context) => const HomeScreen(),
         OnboardingScreen.id: (context) => const OnboardingScreen(),
-        SplashScreen.id: (context) => const SplashScreen(nextScreen: SizedBox()),
-        LoginScreen.id: (context) =>  LoginScreen(),
-        
+        SplashScreen.id: (context) =>
+            const SplashScreen(nextScreen: SizedBox()),
+        LoginScreen.id: (context) => LoginScreen(),
+        ForgotPasswordScreen.id: (context) => ForgotPasswordScreen(),
       },
       home: FutureBuilder<bool>(
         future: _checkFirstRun(),
@@ -32,7 +39,8 @@ class MyApp extends StatelessWidget {
           } else {
             final bool isFirstRun = snapshot.data ?? true;
             return SplashScreen(
-                nextScreen: isFirstRun ? const OnboardingScreen() :  LoginScreen());
+                nextScreen:
+                    isFirstRun ? const OnboardingScreen() : LoginScreen());
           }
         },
       ),

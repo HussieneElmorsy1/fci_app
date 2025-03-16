@@ -1,11 +1,14 @@
 import 'dart:developer';
 import 'package:fci_app/helper/show_snack_bar.dart';
+import 'package:fci_app/screens/forgot_password_screen.dart';
 import 'package:fci_app/screens/home_screen.dart';
 import 'package:fci_app/widgets/custom_bottom.dart';
 import 'package:fci_app/widgets/custom_text_form_field.dart';
 
 import 'package:flutter/material.dart';
 import 'package:fci_app/styles/styles.dart';
+import 'package:get/get.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -14,8 +17,8 @@ class LoginScreen extends StatelessWidget {
 
   final ValueNotifier<Color> textColor = ValueNotifier<Color>(Colors.white);
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
-  String? email, password;
-  GlobalKey<FormState> formKey = GlobalKey();
+  String? email = '', password = '';
+  final GlobalKey<FormState> formKey = GlobalKey();
   static const String id = 'LoginScreen';
 
   @override
@@ -24,7 +27,7 @@ class LoginScreen extends StatelessWidget {
       inAsyncCall: isLoading.value,
       opacity: 5,
       child: Scaffold(
-        backgroundColor: AppColors.kPrimaryColor,
+        backgroundColor: AppColors.white,
         body: Form(
           key: formKey,
           child: SingleChildScrollView(
@@ -41,9 +44,7 @@ class LoginScreen extends StatelessWidget {
                     _buildSubTitle(),
                     AppGaping.kGap5,
                     _buildSubTitle2(),
-                    AppGaping.kGap100,
-                    _buildLoginText(),
-                    AppGaping.kGap20,
+                    AppGaping.kGap125,
                     _buildEmailField(),
                     AppGaping.kGap10,
                     _buildPasswordField(),
@@ -70,52 +71,44 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _buildTitle() {
-    return Text(
-      'التعليم العالي في مصر',
-      style: AppTextStyles.headline1,
+    return Stack(
+      children: [
+        Text("1.7".tr, style: AppTextStyles.headline1),
+        Text("1.7".tr, style: AppTextStyles.headline1Fill),
+      ],
     );
   }
 
   Widget _buildSubTitle() {
     return Text(
-      'جامعة قناة السويس',
-      style: AppTextStyles.headline1,
+      '1.8'.tr,
+      style: AppTextStyles.bodyText,
     );
   }
 
   Widget _buildSubTitle2() {
     return Text(
-      'جامعة حكومية مصرية',
-      style: AppTextStyles.headline1,
-    );
-  }
-
-  Widget _buildLoginText() {
-    return const Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        'Log in',
-        style: AppTextStyles.bodyText,
-      ),
+      '1.9'.tr,
+      style: AppTextStyles.bodyText,
     );
   }
 
   Widget _buildEmailField() {
-    return CustomFormTextField.customFormTextField(
-      labelText: 'Email',
-      helperText: 'Hi, please enter your email',
+    return CustomFormTextField(
+      labelText: '1.2'.tr,
+      helperText: '1.4'.tr,
       keyboardType: TextInputType.emailAddress,
-      icon: Icons.email,
+      icon: Icons.attach_email,
       obscureText: false,
       onChanged: (data) {
         email = data;
       },
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter your email';
+          return '1.10'.tr;
         }
         if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-          return 'Enter a valid email address';
+          return '1.11'.tr;
         }
         return null;
       },
@@ -123,9 +116,9 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _buildPasswordField() {
-    return CustomFormTextField.customFormTextField(
-      labelText: 'Password',
-      helperText: 'Hi, please enter your password',
+    return CustomFormTextField(
+      labelText: '1.3'.tr,
+      helperText: '1.5'.tr,
       keyboardType: TextInputType.visiblePassword,
       icon: Icons.password,
       obscureText: true,
@@ -134,10 +127,10 @@ class LoginScreen extends StatelessWidget {
       },
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter your password';
+          return '1.12'.tr;
         }
         if (value.length < 6) {
-          return 'Password must be at least 6 characters';
+          return '1.13'.tr;
         }
         return null;
       },
@@ -146,11 +139,11 @@ class LoginScreen extends StatelessWidget {
 
   Widget _buildLoginButton(BuildContext context) {
     return CustomBottom(
-      text: 'Log in',
+      text: '1.1'.tr,
       onPressed: () {
         if (formKey.currentState!.validate()) {
           isLoading.value = true;
-          showSnackBar(context, 'Login button pressed.'); // Placeholder action
+          showSnackBar(context, '1.14'.tr); // Placeholder action
           isLoading.value = false;
         }
       },
@@ -161,21 +154,18 @@ class LoginScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          'don\'t have an account? ',
-          style: AppTextStyles.caption,
-        ),
         GestureDetector(
           onTap: () {
             textColor.value = Colors.blue; // Change color on tap
-            Navigator.pushNamed(context, HomeScreen.id);
+            // Navigator.pushNamed(context, HomeScreen.id);
+            Get.toNamed(ForgotPasswordScreen.id);
           },
           child: ValueListenableBuilder(
             valueListenable: textColor,
             builder: (context, color, child) {
               return Text(
-                'Sign Up',
-                style: AppTextStyles.caption.copyWith(color: color),
+                '1.6'.tr,
+                style: AppTextStyles.caption,
               );
             },
           ),

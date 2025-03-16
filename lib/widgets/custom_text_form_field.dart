@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomFormTextField extends StatelessWidget {
-  const CustomFormTextField.customFormTextField({
+  const CustomFormTextField({
     super.key,
     required this.labelText,
     required this.helperText,
@@ -23,69 +23,85 @@ class CustomFormTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      validator: validator, // Use the provided validator
-      style: GoogleFonts.poppins(
-        color: Colors.white,
-        fontSize: 18,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 3,
-      ),
-      keyboardType: keyboardType,
-      obscureText: obscureText,
-      onChanged: onChanged,
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.white,
+    return Stack(
+      children: [
+        // صندوق الخلفية مع التدرج لمحاكاة الظل الداخلي
+        Container(
+          height: 60, // ارتفاع الحقل
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white, // لون الحقل الرئيسي
+            border: const Border(
+              bottom: BorderSide(
+                color: Colors.blue, // الحد السفلي الأزرق
+                width: 2,
+              ),
+            ),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey,
+        // تأثير الظل الداخلي
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: 15, // ارتفاع الظل العلوي
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(25),
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black26, // لون الظل
+                  Colors.transparent, // تلاشي الظل لدمجه مع الخلفية
+                ],
+              ),
+            ),
           ),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xFF123456), // Color matching your background
-            width: 2,
+        // حقل الإدخال الفعلي
+        TextFormField(
+          validator: validator,
+          style: GoogleFonts.poppins(
+            color: Colors.grey.shade600,
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 1,
+          ),
+          keyboardType: keyboardType,
+          obscureText: obscureText,
+          onChanged: onChanged,
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide.none, // إزالة الحدود
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide.none,
+            ),
+            filled: false,
+            fillColor: Colors.transparent, // اجعل الخلفية شفافة داخل الحاوية
+            labelText: labelText,
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+            labelStyle: TextStyle(
+              color: Colors.grey.shade500,
+            ),
+            suffixIcon: Icon(
+              icon,
+              color: Colors.grey.shade400,
+            ),
+            helperText: helperText,
+            helperStyle: TextStyle(
+              color: Colors.grey.shade500,
+            ),
           ),
         ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xFF123456), // Color matching your background
-            width: 2,
-          ),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.white,
-          ),
-        ),
-        filled: false,
-        helperText: helperText,
-        helperStyle: const TextStyle(
-          color: Colors.white,
-        ),
-        labelText: labelText,
-        labelStyle: const TextStyle(
-          color: Colors.white,
-        ),
-        suffixIcon: Icon(
-          icon,
-          color: Colors.white,
-        ),
-        errorStyle: TextStyle(
-          color: Colors.white.withOpacity(0.8), // Subtle error message color
-          fontSize: 14, // Font size for error message
-          fontWeight:
-              FontWeight.w500, // Medium weight to slightly emphasize error
-        ),
-      ),
+      ],
     );
   }
 }

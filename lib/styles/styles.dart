@@ -6,16 +6,24 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyles {
   static TextStyle headline1 = GoogleFonts.cairo(
-    color: const Color(0xFF0C8CE9),
     fontSize: 24,
     fontWeight: FontWeight.w700,
-    letterSpacing: 3,
+    foreground: Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2 // سمك الخط لإعطاء تأثير الظل الداخلي
+      ..color = Colors.black.withOpacity(0.25), // لون الظل الداخلي
   );
 
-  static const TextStyle bodyText = TextStyle(
-    fontSize: 26,
+  static TextStyle headline1Fill = GoogleFonts.cairo(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    color: const Color(0xFF0C8CE9), // اللون الأساسي للنص
+  );
+
+  static TextStyle bodyText = GoogleFonts.cairo(
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
     color: Color(0xFF0C8CE9),
-    fontFamily: 'pacifico',
   );
 
   static const TextStyle caption = TextStyle(
@@ -27,10 +35,10 @@ class AppTextStyles {
 //*********COLORS********** */
 
 class AppColors {
-  static const Color kPrimaryColor = Color(0xFF2b465d);
+  static const Color kPrimaryColor = Color(0xFF1E88E5);
   static const Color accentColor = Color(0xFFF5C33B);
   static const Color backgroundColor = Color(0xFFF7F8FA);
-  static const Color textColor = Color(0xFF4A4A4A);
+  static const Color textColor = Color.fromARGB(255, 255, 219, 219);
   static const Color white = Colors.white;
 }
 //*********Spacing********** */
@@ -56,6 +64,7 @@ class AppGaping {
   static const kGap50 = Gap(50);
   static const kGap60 = Gap(60);
   static const kGap100 = Gap(100);
+  static const kGap125 = Gap(125);
   static const kGap150 = Gap(150);
   static const kGap200 = Gap(200);
   static const kGapLine1 = Gap(1, color: Colors.white, crossAxisExtent: 200);

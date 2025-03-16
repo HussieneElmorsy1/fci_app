@@ -3,9 +3,9 @@ import 'package:fci_app/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class CustomBottom extends StatelessWidget {
-  CustomBottom({super.key, 
+  CustomBottom({
+    super.key,
     required this.text,
     this.onPressed,
   });
@@ -18,7 +18,7 @@ class CustomBottom extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.kPrimaryColor,
           padding: const EdgeInsets.symmetric(vertical: 16),
           textStyle: GoogleFonts.poppins(
             fontSize: 18,
@@ -31,7 +31,7 @@ class CustomBottom extends StatelessWidget {
         child: Text(
           text,
           style: const TextStyle(
-            color: AppColors.kPrimaryColor,
+            color: AppColors.white,
             fontSize: 22,
             fontFamily: 'pacifico',
           ),
